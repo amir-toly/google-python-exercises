@@ -40,6 +40,38 @@ print_words() and print_top().
 import sys
 
 # +++your code here+++
+def word_count(filename):
+	count_words = {}
+	
+	f = open(filename, 'rU')
+	for line in f:
+		for word in line.split():
+			word_l = word.lower()
+			if word_l in count_words:
+				count_words[word_l] += 1
+			else:
+				count_words[word_l] = 1
+	
+	f.close()
+	return count_words
+		
+def print_words(filename):
+	words_count = word_count(filename)
+	
+	for k, v in words_count.items():
+		print 'Word: %s - Count: %d' % (k, v)
+		
+def print_top(filename):
+	words_count = word_count(filename)
+	
+	def tuple2elt(t):
+		return t[1]
+	
+	words_count_sorted = sorted(words_count.items(), key=tuple2elt, reverse=True)
+	
+	for w, c in words_count_sorted[:20]:
+		print 'Word: %s - Count: %d' % (w, c)
+
 # Define print_words(filename) and print_top(filename) functions.
 # You could write a helper utility function that reads a file
 # and builds and returns a word/count dict for it.
